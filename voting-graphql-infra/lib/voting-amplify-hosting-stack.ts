@@ -30,7 +30,7 @@ export class VotingAmplifyHostingStack extends Stack {
       environmentVariables: {
         REGION: this.region,
         SERVER_URL: props.serverUrl,
-        VITE_IS_SERVER_MOCK: "true",
+        VITE_IS_SERVER_MOCK: "false",
         VITE_IS_AUTH_MOCK: "false",
         VITE_USER_POOL_ID: props.cognito.userPoolId,
         VITE_USER_POOL_CLIENT_ID: props.cognito.userPoolClientId,
