@@ -40,7 +40,7 @@ export class VotingAmplifyHostingStack extends Stack {
 
       buildSpec: BuildSpec.fromObject({
         version: "1.0",
-        appRoot: "voting-graphql-web-app",
+        appRoot: "voting-graphql-webapp",
         frontend: {
           phases: {
             preBuild: {
