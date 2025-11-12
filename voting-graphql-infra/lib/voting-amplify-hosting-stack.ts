@@ -1,7 +1,6 @@
 import { Stack, StackProps, SecretValue } from "aws-cdk-lib/core";
 import { Construct } from "constructs";
 import { GitHubSourceCodeProvider, App } from "@aws-cdk/aws-amplify-alpha";
-import { BuildSpec } from "aws-cdk-lib/aws-codebuild";
 
 interface VotingAmplifyHostingStackProps extends StackProps {
   cognito: {
@@ -37,28 +36,6 @@ export class VotingAmplifyHostingStack extends Stack {
         VITE_USER_POOL_CLIENT_ID: props.cognito.userPoolClientId,
         VITE_IDENTITY_POOL_ID: props.cognito.identityPoolId,
       },
-
-      buildSpec: BuildSpec.fromObject({
-        version: "1.0",
-        appRoot: "voting-graphql-webapp",
-        frontend: {
-          phases: {
-            preBuild: {
-              commands: ["npm ci"],
-            },
-            build: {
-              commands: ["npm run build"],
-            },
-          },
-          artifacts: {
-            baseDirectory: "build",
-            files: ["**/*"],
-          },
-          cache: {
-            paths: ["node_modules/**/*"],
-          },
-        },
-      }),
     });
   }
 }
