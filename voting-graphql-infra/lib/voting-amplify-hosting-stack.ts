@@ -8,6 +8,8 @@ interface VotingAmplifyHostingStackProps extends StackProps {
     userPoolId: string;
     userPoolClientId: string;
     identityPoolId: string;
+    authenticatedRoleArn: string;
+    unauthenticatedRoleArn: string;
   };
   serverUrl: string;
 }
@@ -20,10 +22,10 @@ export class VotingAmplifyHostingStack extends Stack {
   ) {
     super(scope, id, props);
 
-    const amplifyApp = new App(this, "ToDoWebApp", {
+    const amplifyApp = new App(this, "VotingWebApp", {
       sourceCodeProvider: new GitHubSourceCodeProvider({
         owner: "vgiabao",
-        repository: "simple-todo-app-using-cdk",
+        repository: "voting-app",
         oauthToken: SecretValue.secretsManager("github-token"),
       }),
       environmentVariables: {
@@ -49,7 +51,7 @@ export class VotingAmplifyHostingStack extends Stack {
             },
           },
           artifacts: {
-            baseDirectory: "dist",
+            baseDirectory: "build",
             files: ["**/*"],
           },
           cache: {

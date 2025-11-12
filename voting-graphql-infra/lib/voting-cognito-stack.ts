@@ -11,6 +11,8 @@ export class CognitoStack extends Stack {
   public readonly userPoolClientId: CfnOutput;
   public readonly identityPoolId: CfnOutput;
   public readonly userPoolArn: CfnOutput;
+  public readonly authenticatedRoleArn: CfnOutput;
+  public readonly unauthenticatedRoleArn: CfnOutput;
   constructor(scope: Construct, id: string, props: StackProps) {
     super(scope, id, props);
 
@@ -63,5 +65,15 @@ export class CognitoStack extends Stack {
     this.userPoolArn = new CfnOutput(this, "CFUserPoolArn", {
       value: userPool.userPoolArn,
     });
+    this.authenticatedRoleArn = new CfnOutput(this, "CFAuthenticatedRoleArn", {
+      value: identityPool.authenticatedRole.roleArn,
+    });
+    this.unauthenticatedRoleArn = new CfnOutput(
+      this,
+      "CFUnauthenticatedRoleArn",
+      {
+        value: identityPool.unauthenticatedRole.roleArn,
+      }
+    );
   }
 }
