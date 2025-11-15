@@ -32,9 +32,9 @@ export class VotingAmplifyHostingStack extends Stack {
         SERVER_URL: props.serverUrl,
         VITE_IS_SERVER_MOCK: "false",
         VITE_IS_AUTH_MOCK: "false",
-        VITE_USER_POOL_ID: props.cognito.userPoolId,
-        VITE_USER_POOL_CLIENT_ID: props.cognito.userPoolClientId,
-        VITE_IDENTITY_POOL_ID: props.cognito.identityPoolId,
+        USER_POOL_ID: props.cognito.userPoolId,
+        USER_POOL_CLIENT_ID: props.cognito.userPoolClientId,
+        IDENTITY_POOL_ID: props.cognito.identityPoolId,
       },
     });
   }

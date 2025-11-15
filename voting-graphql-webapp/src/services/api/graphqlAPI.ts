@@ -88,6 +88,18 @@ export type CreateFeatureInput = {
   voteCount?: number | null,
 };
 
+export type Feature = {
+  __typename: "Feature",
+  createdAt: string,
+  endTime: string,
+  id: string,
+  owner: string,
+  status: FeatureStatus,
+  text: string,
+  updatedAt: string,
+  voteCount?: number | null,
+};
+
 export type DeleteFeatureInput = {
   id: string,
 };
@@ -130,6 +142,12 @@ export type ModelIDInput = {
   ne?: string | null,
   notContains?: string | null,
   size?: ModelSizeInput | null,
+};
+
+export type ModelFeatureConnection = {
+  __typename: "ModelFeatureConnection",
+  items:  Array<Feature | null >,
+  nextToken?: string | null,
 };
 
 export type ModelSubscriptionFeatureFilterInput = {
@@ -193,7 +211,7 @@ export type CreateFeatureMutationVariables = {
 };
 
 export type CreateFeatureMutation = {
-  createFeature:  {
+  createFeature?:  {
     __typename: "Feature",
     createdAt: string,
     endTime: string,
@@ -202,7 +220,7 @@ export type CreateFeatureMutation = {
     status: FeatureStatus,
     text: string,
     updatedAt: string,
-    voteCount: number | null,
+    voteCount?: number | null,
   } | null,
 };
 
@@ -212,7 +230,7 @@ export type DeleteFeatureMutationVariables = {
 };
 
 export type DeleteFeatureMutation = {
-  deleteFeature:  {
+  deleteFeature?:  {
     __typename: "Feature",
     createdAt: string,
     endTime: string,
@@ -221,7 +239,7 @@ export type DeleteFeatureMutation = {
     status: FeatureStatus,
     text: string,
     updatedAt: string,
-    voteCount: number | null,
+    voteCount?: number | null,
   } | null,
 };
 
@@ -233,7 +251,7 @@ export type SendFeatureMutationVariables = {
 };
 
 export type SendFeatureMutation = {
-  sendFeature: boolean | null,
+  sendFeature?: boolean | null,
 };
 
 export type UpdateFeatureMutationVariables = {
@@ -242,7 +260,7 @@ export type UpdateFeatureMutationVariables = {
 };
 
 export type UpdateFeatureMutation = {
-  updateFeature:  {
+  updateFeature?:  {
     __typename: "Feature",
     createdAt: string,
     endTime: string,
@@ -251,7 +269,7 @@ export type UpdateFeatureMutation = {
     status: FeatureStatus,
     text: string,
     updatedAt: string,
-    voteCount: number | null,
+    voteCount?: number | null,
   } | null,
 };
 
@@ -260,7 +278,7 @@ export type GetFeatureQueryVariables = {
 };
 
 export type GetFeatureQuery = {
-  getFeature:  {
+  getFeature?:  {
     __typename: "Feature",
     createdAt: string,
     endTime: string,
@@ -269,7 +287,7 @@ export type GetFeatureQuery = {
     status: FeatureStatus,
     text: string,
     updatedAt: string,
-    voteCount: number | null,
+    voteCount?: number | null,
   } | null,
 };
 
@@ -280,7 +298,7 @@ export type ListFeaturesQueryVariables = {
 };
 
 export type ListFeaturesQuery = {
-  listFeatures:  {
+  listFeatures?:  {
     __typename: "ModelFeatureConnection",
     items:  Array< {
       __typename: "Feature",
@@ -291,9 +309,9 @@ export type ListFeaturesQuery = {
       status: FeatureStatus,
       text: string,
       updatedAt: string,
-      voteCount: number | null,
+      voteCount?: number | null,
     } | null >,
-    nextToken: string | null,
+    nextToken?: string | null,
   } | null,
 };
 
@@ -302,7 +320,7 @@ export type OnCreateFeatureSubscriptionVariables = {
 };
 
 export type OnCreateFeatureSubscription = {
-  onCreateFeature:  {
+  onCreateFeature?:  {
     __typename: "Feature",
     createdAt: string,
     endTime: string,
@@ -311,7 +329,7 @@ export type OnCreateFeatureSubscription = {
     status: FeatureStatus,
     text: string,
     updatedAt: string,
-    voteCount: number | null,
+    voteCount?: number | null,
   } | null,
 };
 
@@ -320,7 +338,7 @@ export type OnDeleteFeatureSubscriptionVariables = {
 };
 
 export type OnDeleteFeatureSubscription = {
-  onDeleteFeature:  {
+  onDeleteFeature?:  {
     __typename: "Feature",
     createdAt: string,
     endTime: string,
@@ -329,7 +347,7 @@ export type OnDeleteFeatureSubscription = {
     status: FeatureStatus,
     text: string,
     updatedAt: string,
-    voteCount: number | null,
+    voteCount?: number | null,
   } | null,
 };
 
@@ -338,7 +356,7 @@ export type OnUpdateFeatureSubscriptionVariables = {
 };
 
 export type OnUpdateFeatureSubscription = {
-  onUpdateFeature:  {
+  onUpdateFeature?:  {
     __typename: "Feature",
     createdAt: string,
     endTime: string,
@@ -347,6 +365,6 @@ export type OnUpdateFeatureSubscription = {
     status: FeatureStatus,
     text: string,
     updatedAt: string,
-    voteCount: number | null,
+    voteCount?: number | null,
   } | null,
 };

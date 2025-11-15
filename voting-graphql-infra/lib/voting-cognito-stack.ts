@@ -4,7 +4,12 @@ import {
   IdentityPool,
   UserPoolAuthenticationProvider,
 } from "aws-cdk-lib/aws-cognito-identitypool";
+import { Effect, PolicyStatement, ServicePrincipal } from "aws-cdk-lib/aws-iam";
+import { Runtime } from "aws-cdk-lib/aws-lambda";
+import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
+import { Topic } from "aws-cdk-lib/aws-sns";
 import { Construct } from "constructs";
+import path from "path";
 
 export class CognitoStack extends Stack {
   public readonly userPoolId: CfnOutput;
@@ -13,8 +18,40 @@ export class CognitoStack extends Stack {
   public readonly userPoolArn: CfnOutput;
   public readonly authenticatedRoleArn: CfnOutput;
   public readonly unauthenticatedRoleArn: CfnOutput;
+  public readonly snsTopicArn: CfnOutput;
   constructor(scope: Construct, id: string, props: StackProps) {
     super(scope, id, props);
+
+    const snsTopic = new Topic(this, "SNSTopicVotingWebApp", {
+      displayName: "VotingWebAppTopic",
+    });
+
+    const postConfirmationLambda = new NodejsFunction(
+      this,
+      "PostConfirmationLambdaVotingWebApp",
+      {
+        functionName: "PostConfirmationLambdaVotingWebApp",
+        entry: path.join(__dirname, "functions/post-confirmation.ts"),
+        runtime: Runtime.NODEJS_20_X,
+        environment: {
+          SNS_TOPIC_ARN: snsTopic.topicArn,
+        },
+
+        bundling: {
+          minify: true,
+          sourceMap: true,
+          externalModules: ["aws-sdk"],
+        },
+      }
+    );
+
+    postConfirmationLambda.addToRolePolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ["sns:Subscribe"],
+        resources: [snsTopic.topicArn],
+      })
+    );
 
     const userPool = new UserPool(this, "UserPoolVotingGraphql", {
       userPoolName: "UserPoolVotingGraphql",
@@ -25,6 +62,14 @@ export class CognitoStack extends Stack {
       autoVerify: {
         email: true, // Automatically verify email addresses
       },
+      lambdaTriggers: {
+        postConfirmation: postConfirmationLambda,
+      },
+    });
+
+    postConfirmationLambda.addPermission("PostConfirmationPermission", {
+      principal: new ServicePrincipal("cognito-idp.amazonaws.com"),
+      sourceArn: userPool.userPoolArn,
     });
 
     const userPoolClient = new UserPoolClient(
@@ -75,5 +120,8 @@ export class CognitoStack extends Stack {
         value: identityPool.unauthenticatedRole.roleArn,
       }
     );
+    this.snsTopicArn = new CfnOutput(this, "CFSnsTopicArn", {
+      value: snsTopic.topicArn,
+    });
   }
 }

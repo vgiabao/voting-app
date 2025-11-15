@@ -5,11 +5,13 @@ A real-time feature voting platform built with React, TypeScript, and Tailwind C
 ## Features
 
 - 🔐 **User Authentication**
+
   - Email-based registration with verification
   - Secure login/logout functionality
   - Mock authentication system for testing
 
 - 📝 **Feature Management**
+
   - Create new feature requests
   - Real-time vote tracking
   - Automatic closing of voting periods (1 hour)
@@ -101,3 +103,7 @@ src/
 - Voting data is stored in memory and resets on page refresh
 - Feature status updates are checked every second
 - All dates and times are handled in ISO format
+
+## Generate code from graphql api hosting on Amplify
+
+- amplify configure codegen (then specify configs)

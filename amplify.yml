@@ -1,5 +1,4 @@
 version: 1
-# appRoot chỉ cho Amplify biết 'cd' vào thư mục nào
 appRoot: voting-graphql-webapp
 frontend:
   phases:
@@ -10,8 +9,6 @@ frontend:
       commands:
         - npm run build
   artifacts:
-    # baseDirectory này là tương đối với appRoot
-    # (nghĩa là 'voting-graphql-webapp/build')
     baseDirectory: build
     files:
       - "**/*"

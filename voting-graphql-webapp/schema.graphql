@@ -23,6 +23,7 @@ type ModelFeatureConnection {
 type Mutation {
   createFeature(condition: ModelFeatureConditionInput, input: CreateFeatureInput!): Feature
   deleteFeature(condition: ModelFeatureConditionInput, input: DeleteFeatureInput!): Feature
+  sendFeature(email: String, id: ID!, text: String, voteCount: Int): Boolean
   updateFeature(condition: ModelFeatureConditionInput, input: UpdateFeatureInput!): Feature
 }
 
